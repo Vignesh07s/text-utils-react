@@ -1,14 +1,6 @@
 :root {
   --placeholder-color: rgba(0, 0, 0, 0.6);
-}
-
-.dark-theme::placeholder {
-  color: var(--placeholder-color);
-}
-
-.dark-theme{
-  border-radius: 10px;
-  box-shadow: 4px 4px 25px black;
+  
 }
 
 .magicBoxes{
@@ -20,28 +12,15 @@
   font-size: 20px;
 }
 
-#flexSwitchCheckDefault{
-  border: 1px solid black;
-}
-
 .form-check-input {
-  background-color: blanchedalmond; /* Default circle (light mode) color */
-  border-color: #3dcac8 !important; 
+  background-color: rgb(139, 146, 147);
+  border-color: #3dcac8 !important;
 }
 .form-check-input:checked {
-  background-color: blue; /* Active circle (dark mode) color */
+  background-color: blue;
   border-color: #0fcff1;
 }
 
-body{
-  /* background-color: #8393899e; */
-  /* background-color: #8a8683; */
-  background-color: #FBEAEB;
-}
-#TextArea,#ModifiedTextArea{
-  /* background-color: #729b9d5e; */
-  background-color: #baaf7142;
-}
 
 .alert {
   position: fixed; 
@@ -49,4 +28,8 @@ body{
   width: 40vw;    
   right: 0px;     
   z-index: 3;
+}
+
+.form-switch {
+  padding-left: 0;
 }

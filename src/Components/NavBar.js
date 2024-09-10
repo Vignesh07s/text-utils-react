@@ -1,55 +1,42 @@
 import React,{useState} from 'react'
+import { Link } from 'react-router-dom';
 
 export default function NavBar() {
-  const [mode,setMode] = useState("light");
-  const [color,setColor] = useState("#4f61bacf");
+  const [mode,setMode] = useState("dark");
   const SwitchTheme = ()=>{
-    const body = document.body;
-    const textarea = document.getElementsByClassName('dark-theme');
     if (mode==="light") {
-      setColor("#729b9d5e");
-        body.style.backgroundColor = '#2e3440';
-        body.style.color = 'white';
-        textarea[0].style.backgroundColor = '#2e3440';
-        textarea[0].style.color = 'white';
-        textarea[0].style.setProperty('--placeholder-color', '#ccc');
-        textarea[1].style.backgroundColor = '#2e3440';
-        textarea[1].style.color = 'white';
-        textarea[1].style.setProperty('--placeholder-color', '#ccc');
         setMode("dark");
-        
+        document.documentElement.setAttribute("data-bs-theme",mode);
     } else {
-      setColor("#2F3C7E");
-        body.style.backgroundColor = '';
-        body.style.color = '';
-        textarea[0].style.backgroundColor = '';
-        textarea[0].style.color = '';
-        textarea[0].style.setProperty('--placeholder-color', 'rgba(0, 0, 0, 0.6)');
-        textarea[1].style.backgroundColor = '';
-        textarea[1].style.color = '';
-        textarea[1].style.setProperty('--placeholder-color', 'rgba(0, 0, 0, 0.6)');
-        setMode("light");
+        setMode("light")
+        document.documentElement.setAttribute("data-bs-theme",mode);
     }
-}
+  }
+
   return (
-    <nav className="navbar navbar-expand-lg" style={{'backgroundColor':color}}>
-      <div className="container-fluid">
-        <a className="navbar-brand" href="/">TextUtilsApp</a>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/">Home</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/">About</a>
-            </li>
-          </ul>
-          <div className="form-check form-switch d-flex">
-            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Dark Mode</label>
-            <input className="form-check-input ms-2" type="checkbox" role="switch" id="flexSwitchCheckDefault" onClick={SwitchTheme}/>
+    <>
+      <nav className="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+        <div className="container-fluid">
+          <Link className="navbar-brand" to="/">TextUtils</Link>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item">
+                <Link className="nav-link active" aria-current="page" to="/">Home</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/about">About</Link>
+              </li>
+            </ul>
+            <div className={`form-check form-switch d-flex ${mode==="dark"?"text-dark":"text-light"}`}>
+                <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Dark Mode</label>
+                <input className="form-check-input ms-2" type="checkbox" role="switch" id="flexSwitchCheckDefault" onClick={SwitchTheme}/>
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </>
   )
 }

@@ -9,12 +9,12 @@ export default function TextUtils(props) {
     
         const ConvertToUpperCase = ()=>{
         setMagicText(text.toUpperCase());
-        if(!wordCount===0) props.showAlert("Converted to uppercase");
+        if(wordCount!==0) props.showAlert("Converted to uppercase");
     }
 
     const ConvertToLowerCase = ()=>{
         setMagicText(text.toLowerCase());
-        if(!wordCount===0) props.showAlert("Converted to lowercase");
+        if(wordCount!==0) props.showAlert("Converted to lowercase");
     }
 
     const getColorCode = ()=>{
@@ -28,14 +28,14 @@ export default function TextUtils(props) {
 
     const UpdateTextColor = ()=>{
         setTextColor(getColorCode());
-        if(!wordCount===0) props.showAlert("Updated text color");
+        if(wordCount!==0) props.showAlert("Updated text color");
     }
 
     const ResetText = ()=>{
         setWordCount(0);
         setText("");
         setMagicText(""); 
-        if(!wordCount===0) props.showAlert("Text cleared from both text boxes");       
+        if(wordCount!==0) props.showAlert("Text cleared from both text boxes");       
     }
 
     const HandleTextArea1 = (event)=>{
@@ -55,7 +55,7 @@ export default function TextUtils(props) {
 
     const RemoveExcessSpaces = ()=>{
         setMagicText(text.replace(/\s+/g,' ').trim())
-        if(!wordCount===0) props.showAlert("Excess spaces removed");
+        if(wordCount!==0) props.showAlert("Excess spaces removed");
     }
 
     const buttons = {
@@ -65,15 +65,25 @@ export default function TextUtils(props) {
     }
 
     const CopyText = ()=>{
-        if(wordCount===0){
-            props.showAlert("Output text box is empty");
-            return
-        }
-        const textToCopy = document.getElementById('ModifiedTextArea');
-        textToCopy.select();
-        document.execCommand('copy');
+        if(magicText.length===0) return;
+        // document.getElementById('ModifiedTextArea').select();
+        // document.execCommand('copy');
         
-        props.showAlert("Text copied to clipboard");
+        // props.showAlert("Text copied to clipboard");
+        navigator.clipboard.writeText(magicText)
+        .then(() => {
+            props.showAlert("Text copied to clipboard");
+        })
+        .catch(err => {
+            console.error('Failed to copy text: ', err);
+        });
+    }
+
+    const CopySelectedText = ()=>{
+        if(window.getSelection().toString().length!==0){
+            document.execCommand('copy');
+            props.showAlert("Text copied to clipboard");
+        }
     }
 
     const width = '300px';
@@ -97,12 +107,13 @@ export default function TextUtils(props) {
             <p className='my-3'>{wordCount} {wordCount===1 ? 'word' : 'words'} and {text.length} {text.length===1 ? 'character' : 'characters'}</p>
 
             <div className="buttons" style={buttons}>
-                <button type="button" className="btn btn-primary my-3" onClick={ConvertToUpperCase} style={{width:width}}>Convert to uppercase</button>
-                <button type="button" className="btn btn-primary my-3" onClick={ConvertToLowerCase} style={{width:width}}>Convert to lowercase</button>
-                <button type="button" className="btn btn-primary my-3" onClick={UpdateTextColor} style={{width:width}}>Update text color</button>
-                <button type="button" className="btn btn-primary my-3" onClick={ResetText} style={{width:width}}>Reset Text</button>
-                <button type="button" className="btn btn-primary my-3" onClick={RemoveExcessSpaces} style={{width:width}}>Remove Excess spaces</button>
-                <button type="button" className="btn btn-primary my-3" onClick={CopyText} style={{width:width}}>Copy text</button>
+                <button type="button" className="btn btn-outline-secondary my-3" onClick={ConvertToUpperCase} style={{width:width}}>Convert to uppercase</button>
+                <button type="button" className="btn btn-outline-secondary my-3" onClick={ConvertToLowerCase} style={{width:width}}>Convert to lowercase</button>
+                <button type="button" className="btn btn-outline-secondary my-3" onClick={UpdateTextColor} style={{width:width}}>Update text color</button>
+                <button type="button" className="btn btn-outline-secondary my-3" onClick={ResetText} style={{width:width}}>Reset Text</button>
+                <button type="button" className="btn btn-outline-secondary my-3" onClick={RemoveExcessSpaces} style={{width:width}}>Remove Excess spaces</button>
+                <button type="button" className="btn btn-outline-secondary my-3" onClick={CopyText} style={{width:width}}>Copy text</button>
+                <button type="button" className="btn btn-outline-secondary my-3" onClick={CopySelectedText} style={{width:width}}>Copy selected text</button>                
             </div>
         </div>
     </>
