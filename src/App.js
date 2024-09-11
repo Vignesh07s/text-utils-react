@@ -18,7 +18,7 @@ function App() {
     }, 3000);
   }
   return (
-    <Router>
+    <Router basename="/text-utils-react">
       <NavBar/>
       <Alert alert={alert}/>
       <Routes>
